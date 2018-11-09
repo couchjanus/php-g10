@@ -7,7 +7,7 @@ $routes = [
     //Главаня страница
     'index.php' => 'HomeController',
     '' => 'HomeController', 
- ];
+];
 
 
 function getURI()
