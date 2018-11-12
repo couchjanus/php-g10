@@ -5,20 +5,8 @@ return [
    'about' => 'AboutController',
    'blog' => 'BlogController',
    'guest' => 'GuestbookController',
+   'admin' => 'Admin\DashboardController',
    //Главаня страница
    'index.php' => 'HomeController',
    '' => 'HomeController', 
 ];
-
-// return [
-//     'contact' => 'ContactController',
-//     'about' => 'AboutController',
-//     'blog' => 'BlogController',
-//     'admin' => 'Admin\DashboardController',
-//     //Главаня страница
-//     'index.php' => 'HomeController',
-//     '' => 'HomeController',
-//  ];
-
-
- 
