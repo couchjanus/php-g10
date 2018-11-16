@@ -1,5 +1,5 @@
 <?php
-
+// namespace App;
 // Общие настройки
 
 // Устанавливаем временную зону по умолчанию
@@ -23,4 +23,7 @@ function render($path, $data = [])
 
 require_once realpath(__DIR__).'/../config/app.php';
 
+require_once CORE.'View.php';
+require_once CORE.'Controller.php';
+// echo __NAMESPACE__;
 require_once CORE.'Router.php';
