@@ -1,26 +1,13 @@
 <?php
 // AboutController.php
-// namespace App\controllers;
 
-// use App\core\Controller;
 
-class AboutController
+class AboutController extends Controller
 {
-    // Class properties and methods go here   
-    public function __construct()
+    public function index()
     {
-        render('home/about', ['title'=>'About <b>Our Cats</b>']);
-        // \App\render('home/about', ['title'=>'About <b>Our Cats</b>']);
-    }
-
-}
-
-// class AboutController extends Controller
-// {
-//     public function index()
-//     {
-//         $title = 'SHOPAHOLIC <b>ABOUT PAGE</b>';
+        $title = 'SHOPAHOLIC <b>ABOUT PAGE</b>';
         
-//         $this->_view->render('home/about', ['title'=>$title]);
-//     }
-// }
+        $this->_view->render('home/about', ['title'=>$title]);
+    }
+}

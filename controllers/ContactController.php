@@ -1,16 +1,15 @@
 <?php
 // ContactController.php
-// namespace App\controllers;
 
-// use App\core\Controller;
-
-class ContactController
+class ContactController extends Controller
 {
     // Class properties and methods go here   
-    public function __construct()
+    public function index()
     {
-        render('home/contact', ['title'=>'Contact <b>Our Cats</b>']);
-        // \App\render('home/contact', ['title'=>'Contact <b>Our Cats</b>']);
+        $title = 'Contact <b>Our Cats</b>';
+        
+        $this->_view->render('home/contact', ['title'=>$title]);
+        
     }
 
 }

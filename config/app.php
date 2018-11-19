@@ -11,4 +11,7 @@
     define('EXT', '.php');
     define('APPNAME', 'Great Shopaholic');
     define('SLOGAN', 'Lets Build Cool Site');
+
+    define('DB_CONFIG_FILE', CONFIG.'db.php');
+    define('LOGS', ROOT.'/logs/');
     

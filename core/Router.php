@@ -1,6 +1,4 @@
 <?php
-// namespace App\core;
-
 function getURI()
 {
     if (isset($_SERVER['REQUEST_URI']) and !empty($_SERVER['REQUEST_URI'])) {
@@ -8,11 +6,12 @@ function getURI()
     }
 }
 
+
 function getPathAction($route)
 {
     $segments = explode('\\', $route);
     $controller = array_pop($segments);
-    $controllerPath = '';
+    $controllerPath = '/';
 
     do {
         if (count($segments)===0) {
@@ -44,19 +43,20 @@ foreach ($routes as $route => $path) {
     if ($route === $uri) {
 
         // Определить контроллер
+
         list($controller, $controllerPath) = getPathAction($path);
-        $action = 'index';
-        // list($segments, $controllerPath) = getPathAction($path);
-        // list($controller, $action) = explode('@', $segments);
-        // $controller = $controller;
+        // $action = 'index';
+
+
+        list($segments, $controllerPath) = getPathAction($path);
+        list($controller, $action) = explode('@', $segments);
+
         $controllerFile = CONTROLLERS .$controllerPath . $controller . EXT;
 
         if (file_exists($controllerFile)) {
             include_once $controllerFile;
-            // echo __NAMESPACE__;
             $controller = new $controller;
-            // $cclass = 'App\controllers\\'.$controller;
-            // $controller = new $cclass();
+
             if (method_exists($controller, $action)) {
                 $controller->$action();
             }
