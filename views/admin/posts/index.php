@@ -30,8 +30,8 @@ require_once VIEWS.'shared/admin/header.php';
                           <tbody class="table-items">
                           <?php foreach ($posts as $post):?>
                             <tr>
-                              <td><?php echo $post->id?></td>
-                              <td><?php echo $post->title?></td>
+                              <td><?php echo $post->id;?></td>
+                              <td><?php echo $post->title;?></td>
                               <td>
                               <button class="btn btn-default"><i class="glyphicon glyphicon-eye-open"></i> View</button>
                               

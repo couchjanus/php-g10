@@ -14,11 +14,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $stmt = $this->_pdo->query("SELECT * FROM categories", PDO::FETCH_CLASS, 'Category');
-        // устанавливаем режим выборки
-        $categories = $stmt->fetchAll(PDO::FETCH_CLASS);
-        $rowCount = $stmt->rowCount();
-        $data['rowCount'] = $rowCount;
+        $categories = Category::index();
         $data['categories'] = $categories;
         $data['title'] = 'Admin Category List Page ';
         $this->_view->render('admin/categories/index', $data);
@@ -32,23 +28,49 @@ class CategoryController extends Controller
     public function create()
     {
         if (isset($_POST) and !empty($_POST)) {
-            // sql
-            $stmt = $this->_pdo->prepare("INSERT INTO categories (name, status) VALUES (?, ?)");
-
-            // Повторяющиеся вставки в базу с использованием подготовленных запросов
-            $stmt->bindParam(1, $name);
-            $stmt->bindParam(2, $status);
-
-            // вставим одну строку
+            $opts = [];
             $name = trim(strip_tags($_POST['name']));
-            $status = trim(strip_tags($_POST['status']));
-
-            $stmt->execute();
+            array_push($opts, $name);
+            $status = $_POST['status'];
+            array_push($opts, $status);
+            Category::store($opts);
             header('Location: /admin/categories');
         }
 
         $data['title'] = 'Admin Category Add New Category ';
         $this->_view->render('admin/categories/create', $data);
-
     }
+
+    // 
+    public function edit($vars)
+    {
+        extract($vars);
+        $category = Category::getCategoryById($id);
+        //Принимаем данные из формы
+        if (isset($_POST) and !empty($_POST)) {
+            $options['name'] = trim(strip_tags($_POST['name']));
+            $options['status'] = $_POST['status'];
+            $options['id'] = $id;
+            Category::update($id, $options);
+            header('Location: /admin/categories');
+        }
+        $data['category'] = $category;
+        $data['title'] = 'Admin Category Edit Page ';
+        $this->_view->render('admin/categories/edit', $data);
+    }
+
+    public function delete($vars)
+    {
+        extract($vars);
+        if (isset($_POST['submit'])) {
+            Category::destroy($id);
+            $this->redirect('/admin/categories');
+        } elseif (isset($_POST['reset'])) {
+            $this->redirect('/admin/categories');            
+        }
+        $data['title'] = 'Admin Delete Category ';
+        $data['category'] = Category::getCategoryById($id);
+        $this->_view->render('admin/categories/delete', $data);
+    }
+
 }
