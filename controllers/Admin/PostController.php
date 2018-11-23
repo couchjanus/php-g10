@@ -2,7 +2,7 @@
 
 require_once realpath(MODELS.'Post.php');
 
-class PostsController extends Controller
+class PostController extends Controller
 {
     public function index()
     {

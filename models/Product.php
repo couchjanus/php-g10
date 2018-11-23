@@ -7,7 +7,7 @@ class Product
     /**
      * Выводит список всех товаров
     */
-    public static function selectAll()
+    public static function index()
     {
         $pdo = Connection::dbFactory(include DB_CONFIG_FILE);
         $stmt = $pdo->query("SELECT * FROM products ORDER BY id ASC");
@@ -63,9 +63,19 @@ class Product
                 description, is_new, status)
                 VALUES (:name, :category_id, :price,
                 :brand, :description, :is_new, :status)";
+
+        // $sql = "INSERT INTO products(
+        //     name, slug, category_id, price, brand,
+        //     description, is_new, status)
+        //     VALUES (:name, :slug,:category_id, :price,
+        //     :brand, :description, :is_new, :status)";
+
         $stmt = $pdo->prepare($sql);
         
-                       
+        // $slug = Slug::makeSlug($options['name'], array('transliterate' => true));
+        
+        // $res->bindParam(':slug', $slug, PDO::PARAM_STR);
+        
         $stmt->bindParam(':name', $options['name'], PDO::PARAM_STR);
         
         $stmt->bindParam(':category_id', $options['category'], PDO::PARAM_INT);

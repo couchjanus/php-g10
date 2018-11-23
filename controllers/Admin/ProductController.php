@@ -6,7 +6,7 @@
 require_once realpath(MODELS.'Product.php');
 require_once realpath(MODELS.'Category.php');
 
-class ProductsController extends Controller
+class ProductController extends Controller
 {
 
     /**
@@ -15,7 +15,7 @@ class ProductsController extends Controller
     */
     public function index()
     {
-        $data = Product::selectAll();
+        $data = Product::index();
         $data['title'] = 'Admin Product List Page ';
         $this->_view->render('admin/products/index', $data);
     }
@@ -72,7 +72,9 @@ class ProductsController extends Controller
         }
       
         $data['product'] = Product::getProductById($id);
-        $data['categories'] = Category::selectAll();
+        // var_dump($data['product']);
+
+        $data['categories'] = Category::index();
         $data['title'] = 'Admin Product Edit Page ';
         $this->_view->render('admin/products/edit', $data);
         

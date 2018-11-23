@@ -42,9 +42,9 @@
                     <select class="form-control" id="category" name="category">
                         <?php if (is_array($categories)): ?>
                             <?php foreach ($categories as $category): ?>
-                                <option value="<?= $category['id']; ?>"
-                                    <?php if ($product['category_id'] == $category['id']) echo ' selected'; ?>>
-                                    <?php echo $category['name']; ?>
+                                <option value="<?= $category->id; ?>"
+                                    <?php if ($product['category_id'] == $category->id) echo ' selected'; ?>>
+                                    <?php echo $category->name; ?>
                                 </option>
                             <?php endforeach; ?>
                         <?php endif; ?>
