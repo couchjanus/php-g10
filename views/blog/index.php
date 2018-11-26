@@ -6,17 +6,16 @@ require_once VIEWS.'shared/navigation.php';
 
 <h1><?=$title?></h1>        
 
-
-<h4 class="feature_sub">Lorem ipsum dolor sit amet, consectetur adipisicing elit. </h4>
-
-
-
 <?php if (count($posts) > 0) :?>
 
 <?php foreach ($posts as $post) :?>
     <article class="">
-        <h2><?php echo $post->title ?></h2>
-        <div><?php echo $post->content?></div>
+        <h2><?php echo $post->title;?></h2>
+        <div>
+        <?php echo $post->created_at;?>
+        <a href="/blog/<?php echo $post->slug;?>">Read more</a>
+        </div>
+
     </article>
 <?php endforeach; ?>
 

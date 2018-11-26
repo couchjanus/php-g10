@@ -19,32 +19,22 @@ CREATE TABLE `categories` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `categories` (`id`, `name`, `status`) VALUES
-(1,	'earth',	1),
-(2,	'mars',	1),
-(3,	'jupiter',	1);
-
-DROP TABLE IF EXISTS `guestbook`;
-CREATE TABLE `guestbook` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(25) NOT NULL,
-  `email` varchar(25) NOT NULL,
-  `comment` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
 
 DROP TABLE IF EXISTS `posts`;
 CREATE TABLE `posts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
+  `slug` varchar(255) NOT NULL,
   `content` text NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `slug` (`slug`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+INSERT INTO `posts` (`id`, `title`, `slug`, `content`, `created_at`, `status`) VALUES
+(1,	'Test cat',	'test-cat',	'Post Cont Hello post',	'2018-11-20 19:04:42',	1),
+(2,	'Hello slug',	'hello-slug',	'Test new slug edit',	'2018-11-26 10:47:08',	1);
 
 DROP TABLE IF EXISTS `products`;
 CREATE TABLE `products` (
@@ -61,4 +51,4 @@ CREATE TABLE `products` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
--- 2018-11-19 07:49:11
+-- 2018-11-26 10:58:39

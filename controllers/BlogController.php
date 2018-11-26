@@ -6,8 +6,15 @@ class BlogController extends Controller
 {
     public function index()
     {
-        $posts = Post::selectAll();
+        $data['posts'] = Post::selectAll();
         $data['title'] = 'Blog Post Page';
         $this->_view->render('blog/index', $data);
+    }
+
+    public function show($vars)
+    {
+        extract($vars);
+        $data['post'] = Post::getPostBySlug($slug);
+        $this->_view->render('blog/show', $data);
     }
 }
