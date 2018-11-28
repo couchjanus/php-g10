@@ -11,8 +11,8 @@ class Category
         $pdo = Connection::dbFactory(include DB_CONFIG_FILE);
         $stmt = $pdo->query("SELECT * FROM categories ORDER BY id ASC");
         
-        // $data['rowCount'] = $stmt->rowCount();
-        $categories = $stmt->fetchAll(PDO::FETCH_CLASS);
+        
+        $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $categories;
     }
     

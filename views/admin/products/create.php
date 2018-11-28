@@ -18,7 +18,7 @@ require_once VIEWS.'shared/admin/header.php';
                     <a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
                 </div>
           </div>
-          <form class="form-horizontal" role="form" method="POST" id="idForm" enctype="multipart/form-data">
+          <form class="form-horizontal" role="form" method="POST" action="/admin/products/save" enctype="multipart/form-data">
 
             <div class="panel-body">
                 
@@ -40,8 +40,8 @@ require_once VIEWS.'shared/admin/header.php';
                     <select class="form-control" id="category" name="category">
                         <?php if (is_array($categories)) : ?>
                             <?php foreach ($categories as $category): ?>
-                                <option value="<?php echo $category->id; ?>">
-                                    <?php echo $category->name; ?>
+                                <option value="<?php echo $category['id']; ?>">
+                                    <?php echo $category['name']; ?>
                                 </option>
                             <?php endforeach; ?>
                         <?php endif; ?>
@@ -63,6 +63,13 @@ require_once VIEWS.'shared/admin/header.php';
                         </div>
                 </div>
 
+                <div class="form-group" id="drop-area">
+                    <label for="image" class="col-sm-2 control-label">Picture</label>
+                    <div class="col-sm-10">
+                        <input type="file" class="form-control" id="fileElem" multiple accept="image/*" name="image"> 
+                        <p>Drop Picture Here</p>
+                    </div>
+                </div>
           
                 <div class="form-group">
                         <label for="is_new" class="col-sm-2 control-label">Is New</label>

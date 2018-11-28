@@ -16,6 +16,26 @@ class Product
         return $data;
     }
 
+    public static function getProducts()
+    {
+
+        $con = Connection::dbFactory(include DB_CONFIG_FILE);
+
+        $sql = "SELECT t1.*, t2.filename as picture
+                FROM products t1
+                JOIN pictures t2
+                ON t2.resource = 'products' 
+                AND t1.id = t2.resource_id
+                ORDER BY id ASC";
+      
+
+        $res = $con->query($sql);
+
+        $products = $res->fetchAll(PDO::FETCH_ASSOC);
+        return $products;
+
+    }
+
     /**
      * Получаем последние товары
      *

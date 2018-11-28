@@ -7,10 +7,11 @@ class PostController extends Controller
     public function index()
     {
         $data['posts'] = Post::selectAll();
+        $data['title'] = 'Admin Posts Page ';
         $data['title'] = 'Admin Posts Page';
         $this->_view->render('admin/posts/index', $data);
     }
-
+    
     // public function create()
     // {
     //     //Принимаем данные из формы

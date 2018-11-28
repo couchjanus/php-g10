@@ -1,20 +1,23 @@
 <?php
 // HomeController.php
+require_once realpath(MODELS.'Product.php');
 
 class HomeController extends Controller
 {
-    protected $title;
-  
+    
     public function index()
-    {  
-        $title = 'Our <b>Cat Members</b>';
-        $posts = [];
-        $this->_view->render('home/index', ['title'=>$title, 'posts'=>$posts]);
+    {
+            $title = 'Our <b>Best Cat Members</b>';
+            $data['title'] = $title;
+            $data['subtitle'] = 'Lorem Ipsum не є випадковим набором літер';
+            $this->_view->render('home/index', $data);
     }
-
-    public function title($title)
-    {  
-        $this->title = $title || 'Our <b>Cats Home</b>';
-        return $this->title;
+    
+    public function getProduct($vars)
+    {
+        $products = Product::getProducts();
+        echo json_encode($products);
     }
+    
 }
+    

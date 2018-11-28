@@ -10,10 +10,10 @@ require_once VIEWS.'shared/navigation.php';
 
 <?php foreach ($posts as $post) :?>
     <article class="">
-        <h2><?php echo $post->title;?></h2>
+        <h2><?php echo $post['title'];?></h2>
         <div>
-        <?php echo $post->created_at;?>
-        <a href="/blog/<?php echo $post->slug;?>">Read more</a>
+        <?php echo $post['created_at'];?>
+        <a href="/blog/<?php echo $post['slug'];?>">Read more</a>
         </div>
 
     </article>

@@ -5,7 +5,7 @@ class Post
     {
         $pdo = Connection::dbFactory(include DB_CONFIG_FILE);
         $stmt = $pdo->query("SELECT * FROM posts");
-        $posts = $stmt->fetchAll(PDO::FETCH_CLASS);
+        $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $posts;
     }
 

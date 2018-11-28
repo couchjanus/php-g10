@@ -21,14 +21,7 @@ require_once CORE.'Request.php';
 require_once CORE.'Slug.php';
 require_once CORE.'View.php';
 require_once CORE.'Controller.php';
-require_once CORE.'Router1.php';
-// require_once CORE.'Router.php';
+require_once CORE.'Router.php';
 
-$obj = Router::load();
-
-// $obj = Router::load(CONFIG.'routes.php');
-
-var_dump($obj);
-
-// Router::load(CONFIG.'routes.php')
-//     ->directPath(Request::uri(), Request::method());
+Router::load(CONFIG.'routes.php')
+    ->directPath(Request::uri(), Request::method());
