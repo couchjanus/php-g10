@@ -40,8 +40,8 @@ require_once VIEWS.'shared/admin/header.php';
                     <select class="form-control" id="category" name="category">
                         <?php if (is_array($categories)) : ?>
                             <?php foreach ($categories as $category): ?>
-                                <option value="<?php echo $category['id']; ?>">
-                                    <?php echo $category['name']; ?>
+                                <option value="<?php echo $category->id; ?>">
+                                    <?php echo $category->name; ?>
                                 </option>
                             <?php endforeach; ?>
                         <?php endif; ?>

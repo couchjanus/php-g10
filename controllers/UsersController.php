@@ -1,13 +1,22 @@
 <?php
 
+require_once realpath(MODELS.'User.php');
 /**
  * Class UserController для работы с пользователем
  */
-require_once realpath(MODELS.'User.php');
 
 class UsersController extends Controller
 {
+    protected $userId;
     protected $user;
+
+    /**
+     * Class UserController для работы с пользователем
+    */
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     /**
      * Регистрация пользователя
@@ -62,17 +71,23 @@ class UsersController extends Controller
 
     }
 
+
     public function actionCheck()
     {
-        if (!$_SESSION['logged'] == true) {
+        if (!Session::get('logged') == true) {
             $response = array(
                     'r' => 'fail',
                     'url' => 'login'
                 );
         } else {
+   
+            $this->userId = User::checkLog();
+            $this->user = User::getUserById($this->userId);
+
             $response = array(
-                'r' => 'success',
-                'msg' => 'Logged in'
+                'phone_number' => $this->user['phone_number'],
+                'last_name' => $this->user['last_name'],
+                'first_name' => $this->user['first_name']
             );
         }
 
@@ -91,36 +106,39 @@ class UsersController extends Controller
         $email = '';
         $password = '';
 
-        // if ($_SESSION['userId']) {
-        //     header("Location: /profile"); //перенаправляем в личный кабинет
-        // }
-
-        if (isset($_POST) and (!empty($_POST))) {
-
-            $email = trim(strip_tags($_POST['email']));
-            $password = $_POST['password'];
-
-            //Флаг ошибок
-            $data['errors'] = false;
-
-            //Валидация полей
-            if (!User::checkEmail($email)) {
-                $data['errors'][] = "Некорректный Email";
-            }
-
-            //Проверяем, существует ли пользователь
-            $userId = User::checkUserData($email, $password);
-
-            if ($userId == false) {
-                $data['errors'][] = "Пользователя с таким email или паролем не существует";
-            } else {
-                $this->user = User::getUserById($userId);
-
-                User::auth($userId); //записываем пользователя в сессию
-
+     
+            if (Session::get('logged') == true) {
                 header("Location: /profile"); //перенаправляем в личный кабинет
             }
-        }
+            
+            // данные были отправлены формой?
+
+            if (isset($_POST) and (!empty($_POST))) {
+
+                $email = trim(strip_tags($_POST['email']));
+                $password = $_POST['password'];
+
+                //Флаг ошибок
+                $data['errors'] = false;
+
+                //Валидация полей
+                if (!User::checkEmail($email)) {
+                    $data['errors'][] = "Некорректный Email";
+                }
+
+                //Проверяем, существует ли пользователь
+                $userId = User::checkUserData($email, $password);
+
+                if ($userId == false) {
+                    $data['errors'][] = "Пользователя с таким email или паролем не существует";
+                } else {
+                    $this->user = User::getUserById($userId);
+
+                    User::auth($userId); //записываем пользователя в сессию
+
+                    header("Location: /profile"); //перенаправляем в личный кабинет
+                }
+            }
         $data['title'] = 'Login Page ';
 
         $this->_view->render('user/login', $data);
@@ -134,7 +152,7 @@ class UsersController extends Controller
      */
     public function logout()
     {
-        session_unset();
+        Session::destroy();
         header('Location: /');
         return true;
     }

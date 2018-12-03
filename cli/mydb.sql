@@ -7,9 +7,9 @@ SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
 SET NAMES utf8mb4;
 
-DROP DATABASE IF EXISTS store;
-CREATE DATABASE `store` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
-USE `store`;
+DROP DATABASE IF EXISTS `mydb`;
+CREATE DATABASE `mydb` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+USE `mydb`;
 
 DROP TABLE IF EXISTS `categories`;
 CREATE TABLE `categories` (
@@ -19,6 +19,8 @@ CREATE TABLE `categories` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+
+
 DROP TABLE IF EXISTS `guestbook`;
 CREATE TABLE `guestbook` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -26,6 +28,14 @@ CREATE TABLE `guestbook` (
   `email` varchar(25) NOT NULL,
   `comment` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+DROP TABLE IF EXISTS `permissions`;
+CREATE TABLE `permissions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -81,6 +91,16 @@ INSERT INTO `roles` (`id`, `name`) VALUES
 (2,	'manaher'),
 (3,	'customer');
 
+DROP TABLE IF EXISTS `role_permission`;
+CREATE TABLE `role_permission` (
+  `role_id` int(11) NOT NULL,
+  `permission_id` int(11) NOT NULL,
+  KEY `role_id` (`role_id`),
+  KEY `permission_id` (`permission_id`),
+  CONSTRAINT `role_permission_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`),
+  CONSTRAINT `role_permission_ibfk_2` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
@@ -89,11 +109,11 @@ CREATE TABLE `users` (
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `role_id` int(11) unsigned NOT NULL DEFAULT '2',
-  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
   `first_name` varchar(20) DEFAULT NULL,
   `last_name` varchar(20) DEFAULT NULL,
   `phone_number` varchar(13) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- 2018-11-30 10:57:04
+-- 2018-12-03 10:20:14

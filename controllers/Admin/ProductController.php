@@ -131,7 +131,7 @@ class ProductController extends Controller
             header('Location: /admin/products');
         }
       
-        $data['product'] = Product::getProductById($id);
+        $data['product'] = $product;
         // var_dump($data['product']);
 
         $data['categories'] = Category::index();

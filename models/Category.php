@@ -12,7 +12,7 @@ class Category
         $stmt = $pdo->query("SELECT * FROM categories ORDER BY id ASC");
         
         
-        $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $categories = $stmt->fetchAll(PDO::FETCH_CLASS);
         return $categories;
     }
     

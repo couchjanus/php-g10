@@ -1,6 +1,7 @@
 <?php
 
 require_once realpath(MODELS.'Role.php');
+require_once realpath(MODELS.'Permission.php');
 
 class RolesController extends Controller
 {
@@ -16,11 +17,12 @@ class RolesController extends Controller
     {
         extract($vars);
         if (isset($_POST['submit'])) {
-            Role::destroy($id);
-            $this->redirect('/admin/roles');
+            Role::delete($id);
+            header('Location: /admin/roles');
         }
         $data['title'] = 'Admin Role Delete Page ';
         $data['role_id'] = $id;
+
         $this->_view->render('admin/roles/delete', $data);
 
     }
@@ -29,10 +31,12 @@ class RolesController extends Controller
     {
         if (isset($_POST) and !empty($_POST)) {
             $options['name'] = trim(strip_tags($_POST['name']));
+
             Role::store($options);
-            $this->redirect('/admin/roles');
+            header('Location: /admin/roles');
         }
         $data['title'] = 'Admin Role Add ';
+       
         $this->_view->render('admin/roles/create', $data);
         
     }
@@ -40,14 +44,29 @@ class RolesController extends Controller
     public function edit($vars)
     {
         extract($vars);
-        $role = Role::getRoleById($id);
+
+        list($role, $perms) = Role::getRolePermission($id);
+        
+        $permissions = Permission::index();
+    
         if (isset($_POST) and !empty($_POST)) {
             $options['name'] = trim(strip_tags($_POST['name']));
+         
             Role::update($id, $options);
-            $this->redirect('/admin/roles');
+                
+            if (!empty($_POST['check_list'])) {
+                foreach ($_POST['check_list'] as $selected) {
+                    Role::insertPerm($id, $selected);
+                }
+            }
+            header('Location: /admin/roles');
         }
-        $data['title'] = 'Admin Role Edit ';
+        
+        $data['title'] = 'Admin Category Edit Page ';
         $data['role'] = $role;
+        $data['perms'] = $perms;
+        $data['permissions'] = $permissions;
         $this->_view->render('admin/roles/edit', $data);
+
     }
 }

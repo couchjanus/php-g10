@@ -66,3 +66,18 @@ $router->post('login', 'UsersController@login');
 
 $router->get('logout', 'UsersController@logout');
 $router->post('logout', 'UsersController@logout');
+
+
+$router->get('profile', 'ProfileController@index');
+$router->get('profile/edit', 'ProfileController@edit');
+
+$router->post('profile/edit', 'ProfileController@edit');
+
+$router->get('admin/permissions', 'Admin\PermissionsController@index');
+$router->get('admin/permissions/create', 'Admin\PermissionsController@create');
+$router->get('admin/permissions/edit/{id}', 'Admin\PermissionsController@edit');
+$router->get('admin/permissions/delete/{id}', 'Admin\PermissionsController@delete');
+
+$router->post('admin/permissions/create', 'Admin\PermissionsController@create');
+$router->post('admin/permissions/edit/{id}', 'Admin\PermissionsController@edit');
+$router->post('admin/permissions/delete/{id}', 'Admin\PermissionsController@delete');

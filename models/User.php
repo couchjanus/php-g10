@@ -34,7 +34,7 @@ class User extends Model
      
 
     /**
-     * Информация о пользователе
+     * Вытягиваем информацию о пользователе по id
      *
      * @param $userId
      * @return mixed
@@ -58,7 +58,7 @@ class User extends Model
     {
         $sql = "SELECT password FROM users WHERE id = :userId";
 
-        $res = (new self)->pdo->prepare($sql);
+        $res = (new self)->pdo->query($sql);
         $res->bindParam(':userId', $userId, PDO::PARAM_INT);
         $res->execute();
 
@@ -67,7 +67,7 @@ class User extends Model
         $password = $options['password'];
 
         if (!password_verify($password, $passwordFromDatabase)) {
-          // update hash from databse - replace old hash $passwordFromDatabase with new hash $newPasswordHash
+            // update hash from databse - replace old hash $passwordFromDatabase with new hash $newPasswordHash
             $password = password_hash($options['password'], PASSWORD_DEFAULT, ["cost" => 12]);
         }
 
@@ -213,24 +213,21 @@ class User extends Model
      *
      * @param $userId
      */
-    
     public static function auth($userId)
     {
-        $_SESSION['userId'] = $userId;
-        $_SESSION['logged'] = true;
+        Session::set('userId', $userId);
+        Session::set('logged', true);
     }
-
     /**
      * Проверяем, авторизован ли пользователь при переходе в личный кабинет
      *
      * @return mixed
      */
-    
     public static function checkLog()
     {
          //Если сессия есть, то возвращаем id пользователя
-        if ($_SESSION['userId']) {
-            return $_SESSION['userId'];
+        if ((Session::get('userId'))) {
+            return Session::get('userId');
         }
         header('Location: user/login');
     }
@@ -242,10 +239,9 @@ class User extends Model
      *
      * @return bool
      */
-    
     public static function isGuest()
-    {    
-        if ($_SESSION['logged'] == true) {
+    {
+        if (Session::get('logged') == true) {
             return false;
         }
         return true;
@@ -267,5 +263,42 @@ class User extends Model
         $res->bindParam(':id', $userId);
         $res->execute();
     }
-}
 
+    public static function updateProfile($userId, $options)
+    {
+        $sql = "UPDATE users
+                SET phone_number = :phone_number, first_name = :first_name, last_name = :last_name
+                WHERE id = :id";
+        $res = (new self)->pdo->prepare($sql);
+        $res->bindParam(':phone_number', $options['phone_number'], PDO::PARAM_STR);
+        $res->bindParam(':first_name', $options['first_name'], PDO::PARAM_STR);
+        $res->bindParam(':last_name', $options['last_name'], PDO::PARAM_STR);
+        $res->bindParam(':id', $userId, PDO::PARAM_INT);
+        return $res->execute();
+    }
+
+    // check if user has a specific privilege
+    
+    public function hasPrivilege($perm)
+    {
+        if ($this->_role->hasPerm($perm)) {
+            return true;
+        }
+        return false;
+    }
+
+    public static function checkPhoneNumber($id)
+    {
+        $db = Connection::makeConnection();
+        $sql = "SELECT phone_number FROM users
+                    WHERE id = :id";
+        $res = $db->prepare($sql);
+        $res->bindParam(':id', $id, PDO::PARAM_INT);
+        $res->execute();
+
+        if ($res->fetchColumn())
+            return $res->fetchColumn();
+        return false;
+    }
+  
+}

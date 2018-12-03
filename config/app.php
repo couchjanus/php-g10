@@ -14,4 +14,9 @@
 
     define('DB_CONFIG_FILE', CONFIG.'db.php');
     define('LOGS', ROOT.'/logs/');
+    define('SESSION_PREFIX', 'shop_');
+
+    //  fully qualified domain name (FQDN)
+
+    define('FQDN', 'http://127.0.0.1:8000');
     

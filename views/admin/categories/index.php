@@ -30,8 +30,8 @@ include_once VIEWS.'shared/admin/header.php';
                           <tbody class="table-items">
                           <?php foreach ($categories as $category):?>
                             <tr>
-                              <td><?php echo $category['id']?></td>
-                              <td><?php echo $category['name']?></td>
+                              <td><?php echo $category->id?></td>
+                              <td><?php echo $category->name?></td>
                               <td>
                               <button class="btn btn-default"><i class="glyphicon glyphicon-eye-open"></i> View</button>
                               <button class="btn btn-info"><i class="glyphicon glyphicon-refresh"></i> Update</button>
