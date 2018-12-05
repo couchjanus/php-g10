@@ -67,12 +67,6 @@ $router->post('login', 'UsersController@login');
 $router->get('logout', 'UsersController@logout');
 $router->post('logout', 'UsersController@logout');
 
-
-$router->get('profile', 'ProfileController@index');
-$router->get('profile/edit', 'ProfileController@edit');
-
-$router->post('profile/edit', 'ProfileController@edit');
-
 $router->get('admin/permissions', 'Admin\PermissionsController@index');
 $router->get('admin/permissions/create', 'Admin\PermissionsController@create');
 $router->get('admin/permissions/edit/{id}', 'Admin\PermissionsController@edit');
@@ -81,3 +75,27 @@ $router->get('admin/permissions/delete/{id}', 'Admin\PermissionsController@delet
 $router->post('admin/permissions/create', 'Admin\PermissionsController@create');
 $router->post('admin/permissions/edit/{id}', 'Admin\PermissionsController@edit');
 $router->post('admin/permissions/delete/{id}', 'Admin\PermissionsController@delete');
+
+$router->get('admin/orders', 'Admin\OrdersController@index');
+$router->get('admin/orders/edit/{id}', 'Admin\OrdersController@edit');
+$router->get('admin/orders/delete/{id}', 'Admin\OrdersController@delete');
+
+$router->post('admin/orders/edit/{id}', 'Admin\OrdersController@edit');
+$router->post('admin/orders/delete/{id}', 'Admin\OrdersController@delete');
+
+$router->get('admin/orders/view/{id}', 'Admin\OrdersController@view');
+
+
+$router->post('check', 'UsersController@actionCheck');
+$router->post('cart', 'CartController@index');
+
+$router->get('profile', 'ProfileController@index');
+$router->get('profile/edit', 'ProfileController@edit');
+$router->get('profile/orders', 'ProfileController@ordersList');
+
+$router->get('profile/orders/view/{id}', 'ProfileController@ordersView');
+$router->get('profile/orders/edit/{id}', 'ProfileController@ordersEdit');
+$router->get('profile/orders/delete/{id}', 'ProfileController@ordersDelete');
+
+$router->post('profile/edit', 'ProfileController@edit');
+

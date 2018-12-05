@@ -1,4 +1,4 @@
-<?php require_once realpath(MODELS.'User.php');?>
+<?php require_once realpath(MODELS.'User.php'); ?>
 <nav class="navbar">
       <nav class="wrapper">
         <div class="logo"><img src="/images/logo.png"></div><!-- Logo -->

@@ -18,5 +18,8 @@
                   <li>
                     <a data-title='Управление permissions' href="/admin/permissions"><i class="glyphicon glyphicon-list"></i> Permissions</a>
                   </li>
+                  <li>
+                    <a data-title='Управление orders' href="/admin/orders"><i class="glyphicon glyphicon-list"></i> Orgers</a>
+                  </li>
                 </ul>
              </div>

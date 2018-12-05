@@ -3,6 +3,7 @@
  * Class ProfileController
  * Контроллер для работы с личным кабинетом
 */
+require_once realpath(MODELS.'Order.php');
 require_once realpath(MODELS.'User.php');
 
 class ProfileController extends Controller
@@ -74,5 +75,44 @@ class ProfileController extends Controller
                     
         $this->_view->render('profile/edit', $data);
     }
-        
+
+    /**
+     * Просмотр истории заказов пользователя
+     *
+     * @return bool
+    */
+
+    public function ordersList()
+    {
+   
+        $orders = Order::getOrdersListByUserId($this->userId);
+        $data['title'] = 'Личный кабинет ';
+        $data['subtitle'] = 'Ваши заказы ';
+        $data['user'] = $this->user;
+        $data['orders'] = $orders;
+
+        $this->_view->render('profile/orders', $data);
+    }
+
+    public function ordersView($vars)
+    {
+        extract($vars);
+        $order = Order::getUserOrderById($id);
+      
+        $data['title'] = 'Личный кабинет ';
+        $data['subtitle'] = 'Ваш заказ #'.$order['id'];
+
+        //Преобразуем JSON  строку продуктов и их кол-ва в массив
+        $orders = json_decode(json_decode($order['products'], true));
+        $products = [];    
+            
+        for ($i=0; $i<count($orders); $i++) {
+            array_push($products, (array)$orders[$i]);
+        }   
+        $data['user'] = $this->user;
+        $data['products'] = $products;
+        $data['order'] = $order;
+        $this->_view->render('profile/order', $data);
+    }
 }
+

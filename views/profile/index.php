@@ -13,7 +13,6 @@ require_once VIEWS.'shared/navigation.php';
                 require_once VIEWS.'profile/_aside.php';
             ?>
         </div>
-        
         <div class="column">
             <div class="panel-title"><h2><?= $subtitle;?></h2></div>
         </div>
