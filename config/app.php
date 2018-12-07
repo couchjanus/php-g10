@@ -20,3 +20,5 @@
 
     define('FQDN', 'http://127.0.0.1:8000');
     
+    define('DOMAIN', 'http://127.0.0.1:8000');
+    define('MAXPAGE', 3);

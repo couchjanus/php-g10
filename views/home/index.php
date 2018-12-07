@@ -5,6 +5,8 @@ require_once VIEWS.'shared/navigation.php';
 ?>
 <!-- product Start -->
 
+<div class="breadcrumb"><?= $breadcrumb;?></div>
+
 <main class="main-container">
     <h1><?php echo $title; ?></h1>        
     <div class="grid-layout"></div>
